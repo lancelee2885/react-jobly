@@ -66,12 +66,18 @@ class JoblyApi {
 
   /*************** Company Routes ***************/
   
-  /** Get details on all companies. */
+  /** Get details on all companies of filtered companies if there is a search term. */
 
-  static async getAllCompanies() {
-    let res = await this.request(`companies`);
-    return res.companies;
+  static async getAllCompanies(term) {
+    if (!term){
+      let res = await this.request(`companies`);
+      return res.companies;
+    } else {
+      let res = await this.request(`companies?name=${term}`);
+      return res.companies;
+    }
   }
+  
   
   /** Get details on a company by handle. */
 
@@ -84,15 +90,22 @@ class JoblyApi {
 
   /** Get details on all jobs. */
 
-  static async getAllJobs() {
-    let res = await this.request(`jobs`);
-    return res.jobs;
+  static async getAllJobs(term) {
+    if (!term){
+      let res = await this.request(`jobs`);
+      return res.jobs;
+    } else {
+      let res = await this.request(`jobs?title=${term}`);
+      return res.jobs;
+    }
   }
   
-
 }
 
 // for now, put token ("testuser" / "password" on class)
 JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
     "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
     "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+
+
+export default JoblyApi

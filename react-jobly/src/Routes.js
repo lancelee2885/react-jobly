@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from './Home';
 import CompaniesPage from './CompaniesPage';
-import CompanyFilter from './CompanyFilter';
+import Company from './Company';
 import JobsPage from './JobsPage';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
@@ -14,7 +14,7 @@ function Routes() {
     <Switch>
       <Route exact path="/"><Home /></Route>
       <Route exact path="/companies"><CompaniesPage /></Route>
-      <Route exact path="/companies/:handle"><CompanyFilter /></Route>
+      <Route exact path="/companies/:handle"><Company /></Route>
       <Route exact path="/jobs"><JobsPage /></Route>
       <Route exact path="/login"><LoginForm /></Route>
       <Route exact path="/signup"><SignupForm /></Route>
