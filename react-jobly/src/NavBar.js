@@ -6,7 +6,12 @@ function NavBar({ currUser, handleLogOut }) {
   function displayCorrectLinks() {
     if (currUser) {
       return (
-        <NavLink exact to="/" onClick={handleLogOut}>Logout</NavLink>
+        <span>
+          <NavLink exact to="/companies">Companies</NavLink>
+          <NavLink exact to="/jobs">Jobs</NavLink>
+          <NavLink exact to="/profile">Profile</NavLink>
+          <NavLink exact to="/" onClick={handleLogOut}>Logout</NavLink>
+        </span>
       );
     } else {
       return (
@@ -21,9 +26,6 @@ function NavBar({ currUser, handleLogOut }) {
   return (
     <nav>
       <NavLink exact to="/">Jobly</NavLink>
-      <NavLink exact to="/companies">Companies</NavLink>
-      <NavLink exact to="/jobs">Jobs</NavLink>
-      <NavLink exact to="/profile">Profile</NavLink>
       {displayCorrectLinks()}
     </nav>
   );
