@@ -1,7 +1,22 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-function NavBar() {
+function NavBar({ currUser, handleLogOut }) {
+
+  function displayCorrectLinks() {
+    if (currUser) {
+      return (
+        <NavLink exact to="/" onClick={handleLogOut}>Logout</NavLink>
+      );
+    } else {
+      return (
+        <span>
+          <NavLink exact to="/login">Login</NavLink>
+          <NavLink exact to="/signup">Sign Up</NavLink>
+        </span>
+      );
+    }
+  }
 
   return (
     <nav>
@@ -9,9 +24,7 @@ function NavBar() {
       <NavLink exact to="/companies">Companies</NavLink>
       <NavLink exact to="/jobs">Jobs</NavLink>
       <NavLink exact to="/profile">Profile</NavLink>
-      <NavLink exact to="/login">Login</NavLink>
-      <NavLink exact to="/signup">Sign Up</NavLink>
-      <NavLink exact to="/">Logout</NavLink>
+      {displayCorrectLinks()}
     </nav>
   );
 }

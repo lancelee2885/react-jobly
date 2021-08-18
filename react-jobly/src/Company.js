@@ -14,7 +14,7 @@ import JoblyApi from "./api";
 function Company() {
   console.log("Company Renders");
 
-  const [company, setCompany] = useState({});
+  const [company, setCompany] = useState({ jobs: [] });
 
   const {handle} = useParams();
 
@@ -31,7 +31,7 @@ function Company() {
     <div className="Company">
       <h2>{company.name}</h2>
       <h4>{company.description}</h4>
-      <JobList jobs={company ? company.job : []}/>
+      <JobList jobs={company.jobs}/>
     </div>
   );
 }
