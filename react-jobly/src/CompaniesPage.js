@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchForm from "./SearchForm";
 import CompanyList from "./CompanyList";
+import Loading from "./Loading"
 import JoblyApi from "./api";
 
 
@@ -15,12 +16,12 @@ import JoblyApi from "./api";
 function CompaniesPage() {
   console.log("CompaniesPage Renders");
 
-  const [companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState(null);
   const [query, setQuery] = useState(""); 
 
   useEffect(function getCompaniesOnSearchChange() {
     async function getCompanies() {
-      const results = await JoblyApi.getAllCompanies(query)
+      const results = await JoblyApi.getAllCompanies(query);
       setCompanies(c => results);
     }
     getCompanies();
@@ -33,8 +34,13 @@ function CompaniesPage() {
 
   return (
     <div className="CompaniesPage">
-      <SearchForm handleSearch={handleSearch}/>
-      <CompanyList companies={companies}/>
+      {!companies
+      ? <Loading />
+      : <div>
+          <SearchForm handleSearch={handleSearch}/>
+          <CompanyList companies={companies ? companies : []}/>
+        </div>
+      }
     </div>
   );
 }

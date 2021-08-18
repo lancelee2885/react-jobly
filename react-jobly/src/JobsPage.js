@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchForm from "./SearchForm";
 import JobList from "./JobList";
+import Loading from "./Loading";
 import JoblyApi from "./api";
 
 
@@ -15,7 +16,7 @@ import JoblyApi from "./api";
 function JobsPage() {
   console.log("JobsPage Renders");
 
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState(null);
   const [query, setQuery] = useState(""); 
 
   useEffect(function getJobsOnSearchChange() {
@@ -32,8 +33,13 @@ function JobsPage() {
 
   return (
     <div className="JobsPage">
-      <SearchForm handleSearch={handleSearch}/>
-      <JobList jobs={jobs}/>
+      {!jobs
+      ? <Loading />
+      : <div>
+          <SearchForm handleSearch={handleSearch}/>
+          <JobList jobs={jobs ? jobs : []}/>
+        </div>
+      }
     </div>
   );
 }

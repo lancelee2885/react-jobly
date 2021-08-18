@@ -19,16 +19,26 @@ function App() {
 
   const [token, setToken] = useState("");
   const [currUser, setCurrUser] = useState(null);
+  
+  /** If there are user credentials in local storage, use those to log in
+   * that user. This is meant to be called on page load, just once.
+   */
+  useEffect(function checkForRememberedUser() {
+    console.log("checkForRememberedUser");
+    const t = localStorage.getItem("token");
+    if (t) setToken(t);
+  }, []);
 
   /**
-   * Updates currUser whenever user logs in or signs up
+   * Updates currUser whenever token changes
    */
-  useEffect(function updateCurrUserOnLogInOrSignUp() {
+  useEffect(function updateCurrUserOnTokenChange() {
     async function updateCurrUser() {
       if (token) {
         const { username } = jwt.decode(token);
         const user = await JoblyApi.getUserInfo(username);
         setCurrUser(user);
+        localStorage.setItem("token", token);
       }
     }
     updateCurrUser();
@@ -56,8 +66,10 @@ function App() {
    * Reset states
    */
   function handleLogOut() {
+    console.log('handleLogOut');
     setToken("");
     setCurrUser(null);
+    localStorage.clear();
   }
 
   return (

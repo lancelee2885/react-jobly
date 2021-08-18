@@ -35,7 +35,7 @@ function SignupForm({ handleSignUp }) {
   }
 
   return (
-    <div className="SignUpForm">
+    <div className="SignupForm">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div>
