@@ -12,10 +12,11 @@ import { useHistory } from "react-router-dom";
  * States:
  *  - jobs: an array of jobs [{id, title, salary, equity}, ...]
  *  - query: a string of search term
+ *  - handleApply: function rec.d from parent passing down to child component
  * 
  * (App -> JobsPage -> JobList, SearchForm)
  */
-function JobsPage() {
+function JobsPage({ handleApply }) {
   console.log("JobsPage Renders");
 
   const [jobs, setJobs] = useState(null);
@@ -49,7 +50,7 @@ function JobsPage() {
             <SearchForm handleSearch={handleSearch} />
           </div>
           <hr></hr>
-          <JobList jobs={jobs ? jobs : []} />
+          <JobList handleApply={handleApply} jobs={jobs ? jobs : []} />
         </div>
       }
     </div>

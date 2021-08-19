@@ -8,11 +8,12 @@ import UserContext from "./UserContext";
  *
  *  States:
  *    - company: an object with company info -> {handle, name, description, numEmployees, logoUrl}
+ *    - handleApply: function rec.d from parent passing down to child component
  *
  *  (App -> Company -> JobList)
  */
 
-function Company() {
+function Company({handleApply}) {
   console.log("Company Renders");
 
   const [company, setCompany] = useState({ jobs: [] });
@@ -40,7 +41,7 @@ function Company() {
       <h4>{company.description}</h4>
       <hr style={{ width: "50%" }}></hr>
       <h4> Available Jobs </h4>
-      <JobList jobs={company.jobs} />
+      <JobList handleApply={handleApply} jobs={company.jobs} />
     </div>
   );
 }

@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import UserContext from "./UserContext"
 
 /** Job: render single job card
  *
  * Props:
  *  - job: an object of job information
+ *  - handleApply: function rec.d from parent to update application status 
+ *
+ * States: 
+ *  - isApplied: check if current job is applied by current user
  * 
  * (JobList -> Job)
  */
-function Job({ job }) {
+function Job({ job, handleApply }) {
   console.log("Job Renders");
+
+  const currUser = useContext(UserContext);
+  const [isApplied, setIsApplied] = useState(currUser.applications.includes(job.id));
 
   let { title, salary, equity } = job;
   if (!salary) {
@@ -16,6 +24,13 @@ function Job({ job }) {
   }
   if (!equity) {
     equity = "0";
+  }
+
+  async function toggleApply() {
+    if (!isApplied) {
+      await handleApply(job.id);
+      setIsApplied(true);
+    }
   }
 
   return (
@@ -27,7 +42,11 @@ function Job({ job }) {
         Equity: {equity}
         <br></br>
       </p>
-      <button type="button" class="btn btn-warning btn-sm">APPLY</button>
+      <button
+        type="button"
+        className={`btn btn-warning btn-sm ${isApplied ? "disabled" : ""} `}
+        onClick={toggleApply}>{isApplied ? "APPLIED" : "APPLY"}
+      </button>
     </div>
   )
 }

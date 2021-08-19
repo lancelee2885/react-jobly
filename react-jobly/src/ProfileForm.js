@@ -115,7 +115,7 @@ function ProfileForm({ handleUpdate }) {
       </form>
 
       <Error errors={err}/>
-      {isUpdated && <div>Updated Successfuly!</div>}
+      {isUpdated && <div className="alert alert-dismissible alert-success">Updated Successfuly!</div>}
     </div>
   )
 }

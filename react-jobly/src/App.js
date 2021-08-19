@@ -86,6 +86,18 @@ function App() {
     localStorage.clear();
   }
 
+    /**
+   * Calls JoblyApi applyToJob to update user's applications
+   */
+     async function handleApply(id) {
+      console.log("handleApply");
+      await JoblyApi.applyToJob(currUser.username, id);
+      setCurrUser(u => ({
+        ...u,
+        applications: [...u.applications, id]
+      }));
+    }
+
   /** If there are user credentials in local storage, use those to log in
    * that user. This is meant to be called on page load, just once.
    */
@@ -111,6 +123,7 @@ function App() {
               handleLogIn={handleLogIn}
               handleSignUp={handleSignUp}
               handleUpdate={handleUpdate}
+              handleApply={handleApply}
             />
           }
         </BrowserRouter>
