@@ -1,6 +1,5 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import useLocalStorage from "react-use-localstorage";
 import { BrowserRouter } from "react-router-dom";
 import jwt from "jsonwebtoken";
 

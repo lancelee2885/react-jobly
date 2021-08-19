@@ -49,6 +49,7 @@ function ProfileForm({ handleUpdate }) {
       }));
       setErr([]);
     } catch(e) {
+      setIsUpdated(false);
       setErr(e);
     }
   }
@@ -57,52 +58,60 @@ function ProfileForm({ handleUpdate }) {
   return (
     <div className="ProfileForm">
       <h1>Profile</h1>
-      <p>{currUser.username}</p>
+      <p>{"Hi " + currUser.username}</p>
       {/* <div>
         <label htmlFor="username">Username</label>
         <input
           value={currUser.username}
         />
       </div> */}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="password">Password: </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            onChange={handleChange}
-            value={formData.password}
-          />
-        </div>
+      <form className="form-group" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstName">First Name: </label>
           <input
+            className="form-control"
             name="firstName"
             id="firstName"
             onChange={handleChange}
             value={formData.firstName}
+            style={{ width: "20rem", margin: "10px auto" }}
           />
         </div>
         <div>
           <label htmlFor="lastName">Last Name: </label>
           <input
+            className="form-control"
             name="lastName"
             id="lastName"
             onChange={handleChange}
             value={formData.lastName}
+            style={{ width: "20rem", margin: "10px auto" }}
           />
         </div>
         <div>
           <label htmlFor="email">Email: </label>
           <input
+            className="form-control"
             name="email"
             id="email"
             onChange={handleChange}
             value={formData.email}
+            style={{ width: "20rem", margin: "10px auto" }}
           />
         </div>
-        <button type="submit">Submit</button>
+        <div>
+          <label htmlFor="password">Confirm Password: </label>
+          <input
+            className="form-control"
+            type="password"
+            name="password"
+            id="password"
+            onChange={handleChange}
+            value={formData.password}
+            style={{ width: "20rem", margin: "10px auto" }}
+          />
+        </div>
+        <button className="btn btn-primary" type="submit">Submit</button>
       </form>
 
       <Error errors={err}/>

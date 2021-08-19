@@ -42,32 +42,36 @@ function LoginForm({ handleLogIn }) {
   return (
     <div className="LoginForm">
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="form-group" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">Username</label>
           <input
+            className="form-control"
             name="username"
             id="username"
             onChange={handleChange}
             value={formData.username}
+            style={{ width: "20rem", margin: "10px auto" }}
           />
         </div>
         <div>
           <label htmlFor="password">Password</label>
           <input
+            className="form-control"
             type="password"
             name="password"
             id="password"
             onChange={handleChange}
             value={formData.password}
+            style={{ width: "20rem", margin: "10px auto" }}
           />
         </div>
-        {/* <input type="Submit" value="Submit" /> */}
-        <button type="submit">Submit</button>
+        <button className="btn btn-primary" type="submit">Submit</button>
       </form>
       <Error errors={err} />
     </div>
   )
 }
+
 
 export default LoginForm

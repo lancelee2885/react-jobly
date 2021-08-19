@@ -11,7 +11,7 @@ import CompanyCard from "./CompanyCard";
 function CompanyList({ companies }) {
   console.log("CompanyList Renders");
   return (
-    <div className="CompanyList">
+    <div className="CompanyList card-columns" style={{margin: "auto 5rem"}}>
       {companies.map(c => (
         <CompanyCard key={c.handle} company={c}/>
       ))}

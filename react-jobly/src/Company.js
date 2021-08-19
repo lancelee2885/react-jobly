@@ -34,10 +34,13 @@ function Company() {
   } 
 
   return (
-    <div className="Company">
+    <div className="Company" style={{ textAlign: "center", margin: "auto 5rem" }}>
       <h2>{company.name}</h2>
+      <hr style={{ width: "50%" }}></hr>
       <h4>{company.description}</h4>
-      <JobList jobs={company.jobs}/>
+      <hr style={{ width: "50%" }}></hr>
+      <h4> Available Jobs </h4>
+      <JobList jobs={company.jobs} />
     </div>
   );
 }

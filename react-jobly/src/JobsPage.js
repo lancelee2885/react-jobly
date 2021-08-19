@@ -19,10 +19,10 @@ function JobsPage() {
   console.log("JobsPage Renders");
 
   const [jobs, setJobs] = useState(null);
-  const [query, setQuery] = useState(""); 
+  const [query, setQuery] = useState("");
   const currUser = useContext(UserContext);
   const history = useHistory();
-  
+
   if (!currUser) {
     history.push("/login");
   }
@@ -31,21 +31,25 @@ function JobsPage() {
     async function getJobs() {
       const results = await JoblyApi.getAllJobs(query)
       setJobs(j => results);
-    }  
+    }
     getJobs();
-  }, [query]);  
+  }, [query]);
 
-  function handleSearch(term){
+  function handleSearch(term) {
     setQuery(q => term);
-  }  
+  }
 
   return (
     <div className="JobsPage">
       {!jobs
-      ? <Loading />
-      : <div>
-          <SearchForm handleSearch={handleSearch}/>
-          <JobList jobs={jobs ? jobs : []}/>
+        ? <Loading />
+        : <div>
+          <div className="row justify-content-around">
+            <h1 style={{ marginTop: "1rem" }}>JOBS</h1>
+            <SearchForm handleSearch={handleSearch} />
+          </div>
+          <hr></hr>
+          <JobList jobs={jobs ? jobs : []} />
         </div>
       }
     </div>

@@ -12,7 +12,7 @@ function JobList({ jobs }) {
   console.log("JobList Renders");
 
   return (
-    <div className="JobList">
+    <div className="JobList card-columns" style={{margin: "auto 5rem"}}>
      {jobs.map(j => (
        <Job key={j.id} job={j}/>
      ))}

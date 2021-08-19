@@ -28,10 +28,9 @@ function SearchForm({ handleSearch }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <button onClick={handleClear}>x</button>
-      <input value={term} onChange={handleChange} />
-      <button>Search!</button>
+    <form onSubmit={handleSubmit} style={{display:"inline-block"}}>
+      <input value={term} onChange={handleChange} className="form-control" style={{width:"20rem", display:"inline", margin:"10px auto"}} />
+      <button className="btn btn-info" style={{ display:"inline", margin:"10px"}} >Search!</button>
     </form>
   );
 }

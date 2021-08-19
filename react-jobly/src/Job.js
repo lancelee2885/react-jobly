@@ -10,12 +10,24 @@ import React from "react";
 function Job({ job }) {
   console.log("Job Renders");
 
-  const {title, salary, equity} = job;
+  let { title, salary, equity } = job;
+  if (!salary) {
+    salary = "Negotiable";
+  }
+  if (!equity) {
+    equity = "0";
+  }
+
   return (
-    <div className="Job">
-      <h4>{title}</h4>
-      <small>Salary: {salary}</small>
-      <small>Equity: {equity}</small>
+    <div className="Job card bg-secondary mb-3" style={{ maxWidth: "20rem", maxHeight: "10rem" }}>
+      <h5 className="card-header">{title}</h5>
+      <p className="card-text" style={{ margin: "2%" }}>
+        Salary: {salary}
+        <br></br>
+        Equity: {equity}
+        <br></br>
+      </p>
+      <button type="button" class="btn btn-warning btn-sm">APPLY</button>
     </div>
   )
 }

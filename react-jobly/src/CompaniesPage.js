@@ -47,7 +47,11 @@ function CompaniesPage() {
         <Loading />
       ) : (
         <div>
-          <SearchForm handleSearch={handleSearch} />
+          <div className="row justify-content-around">
+            <h1 style={{marginTop:"1rem"}}> Companies </h1>
+            <SearchForm handleSearch={handleSearch} />
+          </div>
+          <hr></hr>
           <CompanyList companies={companies ? companies : []} />
         </div>
       )}
