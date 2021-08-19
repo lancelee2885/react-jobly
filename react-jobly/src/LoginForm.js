@@ -18,6 +18,9 @@ function LoginForm({ handleLogIn }) {
   const history = useHistory();
   const currUser = useContext(UserContext);
 
+  if (currUser){
+    history.push("/companies");
+  }
 
   function handleChange(evt) {
     const input = evt.target;
@@ -36,10 +39,6 @@ function LoginForm({ handleLogIn }) {
     }
   }
 
-  if(currUser){
-    history.push("/companies");
-  }
-  
   return (
     <div className="LoginForm">
       <h1>Log In</h1>
@@ -63,7 +62,8 @@ function LoginForm({ handleLogIn }) {
             value={formData.password}
           />
         </div>
-        <input type="Submit" value="Submit" />
+        {/* <input type="Submit" value="Submit" /> */}
+        <button type="submit">Submit</button>
       </form>
       <Error errors={err} />
     </div>

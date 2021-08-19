@@ -1,9 +1,11 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
+import useLocalStorage from "react-use-localstorage";
 import { BrowserRouter } from "react-router-dom";
 import jwt from "jsonwebtoken";
 
 import Routes from "./Routes";
+import Loading from "./Loading";
 import NavBar from "./NavBar";
 import JoblyApi from "./api";
 import UserContext from "./UserContext";
@@ -12,7 +14,8 @@ import UserContext from "./UserContext";
  *
  *  States:
  *    - token: encrypted string
- *    - currUser: an object of user's information {username, firstName, lastName, email, isAdmin, application:[jobId...]}
+ *    - currUser: an object of user's information {username, firstName, lastName, email, isAdmin, applications: [jobId...]}
+ *    - infoLoaded: checks if user info has been loaded onto currUser
  */
 
 function App() {
@@ -20,21 +23,11 @@ function App() {
 
   const [token, setToken] = useState("");
   const [currUser, setCurrUser] = useState(null);
-
-  /** If there are user credentials in local storage, use those to log in
-   * that user. This is meant to be called on page load, just once.
-   */
-  useEffect(function checkForRememberedUser() {
-    console.log("checkForRememberedUser");
-    const t = localStorage.getItem("token");
-    if (t) {
-      setToken(t);
-      JoblyApi.token = t;
-    };
-  }, []);
+  const [infoLoaded, setInfoLoaded] = useState(false);
 
   /**
-   * Updates currUser whenever token changes
+   * Updates currUser whenever token changes or when token found in
+   * localStorage
    */
   useEffect(
     function updateCurrUserOnTokenChange() {
@@ -43,10 +36,14 @@ function App() {
           const { username } = jwt.decode(token);
           const user = await JoblyApi.getUserInfo(username);
           setCurrUser(user);
-          localStorage.setItem("token", token);
-        } //TODO: else ... checkForRememberedUser ...
+          // localStorage.setItem("token", token);
+          setInfoLoaded(true);
+        } else {
+          checkForRememberedUser();
+        }
       }
       updateCurrUser();
+
     },
     [token]
   );
@@ -58,6 +55,7 @@ function App() {
     console.log("handleLogIn");
     const token = await JoblyApi.logIn(credentials);
     setToken(token);
+    localStorage.setItem("token", token);
   }
 
   /**
@@ -67,6 +65,16 @@ function App() {
     console.log("handleSignUp");
     const token = await JoblyApi.signUp(userInfo);
     setToken(token);
+    localStorage.setItem("token", token);
+  }
+
+  /**
+   * Calls JoblyApi updateUser to update user information
+   */
+  async function handleUpdate(userInfo) {
+    console.log("handleUpdate");
+    const user = await JoblyApi.updateUser(userInfo, currUser.username);
+    setCurrUser(user);
   }
 
   /**
@@ -79,15 +87,33 @@ function App() {
     localStorage.clear();
   }
 
+  /** If there are user credentials in local storage, use those to log in
+   * that user. This is meant to be called on page load, just once.
+   */
+  function checkForRememberedUser() {
+    console.log("checkForRememberedUser");
+    const t = localStorage.getItem("token");
+    if (t) {
+      setToken(t);
+      JoblyApi.token = t;
+    } else {
+      setInfoLoaded(true);
+    }
+  }
+
   return (
     <UserContext.Provider value={currUser}>
       <div className="App">
         <BrowserRouter>
           <NavBar currUser={currUser} handleLogOut={handleLogOut} />
-          <Routes
-            handleLogIn={handleLogIn}
-            handleSignUp={handleSignUp}
-          />
+          {!infoLoaded
+          ? <Loading />
+          : <Routes
+              handleLogIn={handleLogIn}
+              handleSignUp={handleSignUp}
+              handleUpdate={handleUpdate}
+            />
+          }
         </BrowserRouter>
       </div>
     </UserContext.Provider>

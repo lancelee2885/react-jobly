@@ -9,7 +9,9 @@ import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import ProfileForm from './ProfileForm';
 
-function Routes({ handleLogIn, handleSignUp }) {
+// props.children for public/private routes
+
+function Routes({ handleLogIn, handleSignUp, handleUpdate }) {
 
   return (
     <Switch>
@@ -17,9 +19,9 @@ function Routes({ handleLogIn, handleSignUp }) {
       <Route exact path="/companies"><CompaniesPage /></Route>
       <Route exact path="/companies/:handle"><Company /></Route>
       <Route exact path="/jobs"><JobsPage /></Route>
-      <Route exact path="/login"><LoginForm handleLogIn={handleLogIn}  /></Route>
+      <Route exact path="/login"><LoginForm handleLogIn={handleLogIn} /></Route>
       <Route exact path="/signup"><SignupForm handleSignUp={handleSignUp}/></Route>
-      <Route exact path="/profile"><ProfileForm /></Route>
+      <Route exact path="/profile"><ProfileForm handleUpdate={handleUpdate}/></Route>
       <Redirect to="/" />
     </Switch>
   );

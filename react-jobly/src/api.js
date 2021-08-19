@@ -59,6 +59,13 @@ class JoblyApi {
     return res.token;
   }
   
+  /** Authenticates user credentials and returns a token. */
+
+  static async updateUser(userInfo, username) {
+    let res = await this.request(`users/${username}`, userInfo, "patch");
+    return res.user;
+  }
+  
   /** Apply to a job. */
 
   static async applyToJob(username, id) {

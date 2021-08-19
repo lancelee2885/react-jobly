@@ -22,6 +22,10 @@ function CompaniesPage() {
   const currUser = useContext(UserContext);
   const history = useHistory();
 
+  if (!currUser) {
+    history.push("/login");
+  } 
+
   useEffect(
     function getCompaniesOnSearchChange() {
       async function getCompanies() {
@@ -34,12 +38,8 @@ function CompaniesPage() {
   );
 
   function handleSearch(term) {
-    setQuery((q) => term);
+    setQuery(term);
   }
-
-  if (!currUser) {
-    history.push("/login");
-  } 
 
   return (
     <div className="CompaniesPage">

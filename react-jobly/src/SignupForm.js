@@ -18,6 +18,10 @@ function SignupForm({ handleSignUp }) {
   const history = useHistory();
   const currUser = useContext(UserContext);
 
+  if (currUser){
+    history.push("/companies");
+  }
+
   function handleChange(evt) {
     const input = evt.target;
     setFormData(formData => ({
@@ -33,10 +37,6 @@ function SignupForm({ handleSignUp }) {
     } catch(e) {
       setErr(e);
     }
-  }
-
-  if(currUser){
-    history.push("/companies");
   }
 
   return (

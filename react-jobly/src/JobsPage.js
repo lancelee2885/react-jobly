@@ -22,22 +22,22 @@ function JobsPage() {
   const [query, setQuery] = useState(""); 
   const currUser = useContext(UserContext);
   const history = useHistory();
+  
+  if (!currUser) {
+    history.push("/login");
+  }
 
   useEffect(function getJobsOnSearchChange() {
     async function getJobs() {
       const results = await JoblyApi.getAllJobs(query)
       setJobs(j => results);
-    }
+    }  
     getJobs();
-  }, [query]);
+  }, [query]);  
 
   function handleSearch(term){
     setQuery(q => term);
-  }
-
-  if (!currUser) {
-    history.push("/login");
-  }
+  }  
 
   return (
     <div className="JobsPage">
