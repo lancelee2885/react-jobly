@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Error from "./Error";
+import UserContext from "./UserContext";
 
 /**
  * Renders a form for users to sign up
@@ -15,6 +16,7 @@ function SignupForm({ handleSignUp }) {
   const [formData, setFormData] = useState(initialData);
   const [err, setErr] = useState([]);
   const history = useHistory();
+  const currUser = useContext(UserContext);
 
   function handleChange(evt) {
     const input = evt.target;
@@ -28,10 +30,13 @@ function SignupForm({ handleSignUp }) {
     evt.preventDefault(); 
     try {
       await handleSignUp(formData);
-      history.push("/companies");
     } catch(e) {
       setErr(e);
     }
+  }
+
+  if(currUser){
+    history.push("/companies");
   }
 
   return (

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import {useParams} from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import {useParams, useHistory} from "react-router-dom";
 import JobList from "./JobList";
 import JoblyApi from "./api";
+import UserContext from "./UserContext";
 
 /** Company: renders a page with company information and JobList of the company
  *
@@ -15,6 +16,8 @@ function Company() {
   console.log("Company Renders");
 
   const [company, setCompany] = useState({ jobs: [] });
+  const history = useHistory();
+  const currUser = useContext(UserContext);
 
   const {handle} = useParams();
 
@@ -26,7 +29,10 @@ function Company() {
     getCompanyInfo();
   }, []);
 
-  // use a loading page/component for first render
+  if (!currUser) {
+    history.push("/login");
+  } 
+
   return (
     <div className="Company">
       <h2>{company.name}</h2>

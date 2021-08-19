@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Error from "./Error";
+import UserContext from "./UserContext";
 
 /**
  * Renders a form for users to log in
@@ -15,6 +16,7 @@ function LoginForm({ handleLogIn }) {
   const [formData, setFormData] = useState(initialData);
   const [err, setErr] = useState([]);
   const history = useHistory();
+  const currUser = useContext(UserContext);
 
 
   function handleChange(evt) {
@@ -29,10 +31,13 @@ function LoginForm({ handleLogIn }) {
     evt.preventDefault();
     try {
       await handleLogIn(formData);
-      history.push("/companies");
     } catch (e) {
       setErr(e);
     }
+  }
+
+  if(currUser){
+    history.push("/companies");
   }
   
   return (
