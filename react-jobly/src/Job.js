@@ -17,7 +17,7 @@ function Job({ job, handleApply, handleUnApply }) {
   console.log("Job Renders");
 
   const currUser = useContext(UserContext);
-  const [isApplied, setIsApplied] = useState(currUser.applications ? currUser.applications.includes(job.id) : false);
+  const [isApplied, setIsApplied] = useState(currUser.applications.has(job.id));
 
   let { title, salary, equity } = job;
   if (!salary) {

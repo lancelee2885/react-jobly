@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {debounce} from 'lodash';
 
 /** SearchForm: renders a form for search a term
  * 
@@ -10,10 +11,14 @@ import React, { useState } from "react";
 function SearchForm({ handleSearch }) {
   console.log("SearchForm Renders");
 
+  
   const [term, setTerm] = useState("");
 
+  
   function handleChange(evt) {
     setTerm(evt.target.value);
+    const search = debounce(handleSearch, 300);
+    search(evt.target.value)
   }
 
   function handleSubmit(evt) {

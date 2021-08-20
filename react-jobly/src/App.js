@@ -13,7 +13,7 @@ import UserContext from "./UserContext";
  *
  *  States:
  *    - token: encrypted string
- *    - currUser: an object of user's information {username, firstName, lastName, email, isAdmin, applications: [jobId...]}
+ *    - currUser: an object of user's information {username, firstName, lastName, email, isAdmin, applications: {jobId...}}
  *    - infoLoaded: checks if user info has been loaded onto currUser
  */
 
@@ -34,6 +34,7 @@ function App() {
         if (token) {
           const { username } = jwt.decode(token);
           const user = await JoblyApi.getUserInfo(username);
+          user.applications = new Set(user.applications);
           setCurrUser(user);
           setInfoLoaded(true);
         } else {
@@ -72,6 +73,7 @@ function App() {
   async function handleUpdate(userInfo) {
     console.log("handleUpdate");
     const user = await JoblyApi.updateUser(userInfo, currUser.username);
+    user.applications = new Set(user.applications);
     setCurrUser(user);
   }
 
@@ -94,7 +96,7 @@ function App() {
         await JoblyApi.applyToJob(currUser.username, id);
         setCurrUser(u => ({
           ...u,
-          applications: [...u.applications, id] // make this a set
+          applications: u.applications.add(id) // make this a set
         }));
       } catch(err) {
         console.log("HANDLEAPPLY ERROR IN APP", err);
@@ -108,6 +110,7 @@ function App() {
       console.log("handleUnApply");
       await JoblyApi.unApplyToJob(currUser.username, id);
       const user = await JoblyApi.getUserInfo(currUser.username);
+      user.applications = new Set(user.applications);
       setCurrUser(user);
     }
 
