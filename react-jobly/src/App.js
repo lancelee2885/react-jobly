@@ -35,7 +35,6 @@ function App() {
           const { username } = jwt.decode(token);
           const user = await JoblyApi.getUserInfo(username);
           setCurrUser(user);
-          // localStorage.setItem("token", token);
           setInfoLoaded(true);
         } else {
           checkForRememberedUser();
@@ -86,16 +85,30 @@ function App() {
     localStorage.clear();
   }
 
-    /**
+  /**
    * Calls JoblyApi applyToJob to update user's applications
    */
      async function handleApply(id) {
       console.log("handleApply");
-      await JoblyApi.applyToJob(currUser.username, id);
-      setCurrUser(u => ({
-        ...u,
-        applications: [...u.applications, id]
-      }));
+      try {
+        await JoblyApi.applyToJob(currUser.username, id);
+        setCurrUser(u => ({
+          ...u,
+          applications: [...u.applications, id] // make this a set
+        }));
+      } catch(err) {
+        console.log("HANDLEAPPLY ERROR IN APP", err);
+      }
+    }
+
+  /**
+   * Calls JoblyApi unApplyToJob to update user's applications
+   */
+     async function handleUnApply(id) {
+      console.log("handleUnApply");
+      await JoblyApi.unApplyToJob(currUser.username, id);
+      const user = await JoblyApi.getUserInfo(currUser.username);
+      setCurrUser(user);
     }
 
   /** If there are user credentials in local storage, use those to log in
@@ -124,6 +137,7 @@ function App() {
               handleSignUp={handleSignUp}
               handleUpdate={handleUpdate}
               handleApply={handleApply}
+              handleUnApply={handleUnApply}
             />
           }
         </BrowserRouter>

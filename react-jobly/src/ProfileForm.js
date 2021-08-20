@@ -54,17 +54,10 @@ function ProfileForm({ handleUpdate }) {
     }
   }
 
-
   return (
     <div className="ProfileForm">
       <h1>Profile</h1>
       <p>{"Hi " + currUser.username}</p>
-      {/* <div>
-        <label htmlFor="username">Username</label>
-        <input
-          value={currUser.username}
-        />
-      </div> */}
       <form className="form-group" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstName">First Name: </label>

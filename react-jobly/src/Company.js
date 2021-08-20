@@ -13,7 +13,7 @@ import UserContext from "./UserContext";
  *  (App -> Company -> JobList)
  */
 
-function Company({handleApply}) {
+function Company({ handleApply , handleUnApply }) {
   console.log("Company Renders");
 
   const [company, setCompany] = useState({ jobs: [] });
@@ -28,7 +28,7 @@ function Company({handleApply}) {
       setCompany((c) => company);
     }
     getCompanyInfo();
-  }, []);
+  }, [handle]);
 
   if (!currUser) {
     history.push("/login");
@@ -41,7 +41,11 @@ function Company({handleApply}) {
       <h4>{company.description}</h4>
       <hr style={{ width: "50%" }}></hr>
       <h4> Available Jobs </h4>
-      <JobList handleApply={handleApply} jobs={company.jobs} />
+      <JobList 
+        handleApply={handleApply} 
+        handleUnApply={handleUnApply}
+        jobs={company.jobs} 
+      />
     </div>
   );
 }

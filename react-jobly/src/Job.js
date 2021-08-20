@@ -5,14 +5,15 @@ import UserContext from "./UserContext"
  *
  * Props:
  *  - job: an object of job information
- *  - handleApply: function rec.d from parent to update application status 
+ *  - handleApply: function rec.d from parent to update application status
+ *  - handleUnApply: function rec.d from parent to unapply to a job app 
  *
  * States: 
  *  - isApplied: check if current job is applied by current user
  * 
  * (JobList -> Job)
  */
-function Job({ job, handleApply }) {
+function Job({ job, handleApply, handleUnApply }) {
   console.log("Job Renders");
 
   const currUser = useContext(UserContext);
@@ -30,6 +31,9 @@ function Job({ job, handleApply }) {
     if (!isApplied) {
       await handleApply(job.id);
       setIsApplied(true);
+    } else {
+      await handleUnApply(job.id);
+      setIsApplied(false);
     }
   }
 

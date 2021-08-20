@@ -9,13 +9,18 @@ import Job from "./Job";
  * 
  *  (JobsPage -> JobList -> Job)
  */
-function JobList({ jobs, handleApply }) {
+function JobList({ jobs, handleApply, handleUnApply }) {
   console.log("JobList Renders");
 
   return (
     <div className="JobList card-columns" style={{margin: "auto 5rem"}}>
      {jobs.map(j => (
-       <Job handleApply={handleApply} key={j.id} job={j}/>
+       <Job 
+        handleApply={handleApply}
+        handleUnApply={handleUnApply}
+        key={j.id} 
+        job={j}
+      />
      ))}
     </div>
   );

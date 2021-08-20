@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
  * 
  * (App -> JobsPage -> JobList, SearchForm)
  */
-function JobsPage({ handleApply }) {
+function JobsPage({ handleApply, handleUnApply }) {
   console.log("JobsPage Renders");
 
   const [jobs, setJobs] = useState(null);
@@ -31,13 +31,13 @@ function JobsPage({ handleApply }) {
   useEffect(function getJobsOnSearchChange() {
     async function getJobs() {
       const results = await JoblyApi.getAllJobs(query)
-      setJobs(j => results);
+      setJobs(results);
     }
     getJobs();
   }, [query]);
 
   function handleSearch(term) {
-    setQuery(q => term);
+    setQuery(term);
   }
 
   return (
@@ -50,7 +50,11 @@ function JobsPage({ handleApply }) {
             <SearchForm handleSearch={handleSearch} />
           </div>
           <hr></hr>
-          <JobList handleApply={handleApply} jobs={jobs ? jobs : []} />
+          <JobList 
+            handleApply={handleApply} 
+            handleUnApply={handleUnApply} 
+            jobs={jobs ? jobs : []}
+          />
         </div>
       }
     </div>

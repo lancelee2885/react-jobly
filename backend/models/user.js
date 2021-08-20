@@ -239,6 +239,62 @@ class User {
            VALUES ($1, $2)`,
         [jobId, username]);
   }
+  
+  /** Unapply for job: update db, returns undefined.
+   *
+   * - username: username unapplying to job
+   * - jobId: job id
+   **/
+
+  static async unApplyToJob(username, jobId) {
+    const preCheck = await db.query(
+          `SELECT id
+           FROM jobs
+           WHERE id = $1`, [jobId]);
+    const job = preCheck.rows[0];
+
+    if (!job) throw new NotFoundError(`No job: ${jobId}`);
+
+    const preCheck2 = await db.query(
+          `SELECT username
+           FROM users
+           WHERE username = $1`, [username]);
+    const user = preCheck2.rows[0];
+
+    if (!user) throw new NotFoundError(`No username: ${username}`);
+
+    await db.query(
+          `DELETE FROM applications
+           WHERE job_id = $1 AND username = $2`,
+        [jobId, username]);
+  }
+
+  /**
+   * Gets list of jobs that user has applied for
+   * 
+   */
+  static async getAppliedJobs(username) {
+    const preCheck2 = await db.query(
+      `SELECT username
+       FROM users
+       WHERE username = $1`, [username]);
+    const user = preCheck2.rows[0];
+
+    if (!user) throw new NotFoundError(`No username: ${username}`);
+
+    const jobs = await db.query(`SELECT j.id,
+                        j.title,
+                        j.salary,
+                        j.equity,
+                        c.name AS "companyName"
+                 FROM users AS u 
+                   JOIN applications AS a ON a.username = u.username
+                   JOIN jobs AS j ON a.job_id = j.id
+                   JOIN companies AS c ON c.handle = j.company_handle
+                 WHERE u.username = $1`, [username]);
+    
+    return jobs.rows;
+  }
 }
 
 

@@ -21,12 +21,6 @@ function SearchForm({ handleSearch }) {
     handleSearch(term);
   }
 
-  function handleClear(evt) {
-    evt.preventDefault();
-    handleSearch("");
-    setTerm("");
-  }
-
   return (
     <form onSubmit={handleSubmit} style={{display:"inline-block"}}>
       <input value={term} onChange={handleChange} className="form-control" style={{width:"20rem", display:"inline", margin:"10px auto"}} />

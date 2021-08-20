@@ -119,6 +119,22 @@ router.delete("/:username", ensureCorrectUserOrAdmin, async function (req, res, 
   }
 });
 
+/** GET /[username]/jobs/[id]  { state } => { application }
+ *
+ * Returns list of jobs: [{id, title, salary, equity, name }, ...]
+ *
+ * Authorization required: admin or same-user-as-:username
+ * */
+
+ router.get("/:username/jobs", ensureCorrectUserOrAdmin, async function (req, res, next) {
+  try {
+    const username = req.params.username;
+    const jobs = await User.getAppliedJobs(username);
+    return res.json({ jobs });
+  } catch (err) {
+    return next(err);
+  }
+});
 
 /** POST /[username]/jobs/[id]  { state } => { application }
  *
@@ -132,6 +148,23 @@ router.post("/:username/jobs/:id", ensureCorrectUserOrAdmin, async function (req
     const jobId = +req.params.id;
     await User.applyToJob(req.params.username, jobId);
     return res.json({ applied: jobId });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+/** DELETE /[username]/jobs/[id]  { state } => { application }
+ *
+ * Returns {"unapplied": jobId}
+ *
+ * Authorization required: admin or same-user-as-:username
+ * */
+
+router.delete("/:username/jobs/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
+  try {
+    const jobId = +req.params.id;
+    await User.unApplyToJob(req.params.username, jobId);
+    return res.json({ unapplied: jobId });
   } catch (err) {
     return next(err);
   }

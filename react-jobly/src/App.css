@@ -70,13 +70,6 @@ nav {
 }
 
 
-
-
-.NavBar a {
-  font-weight: bold;
-  text-decoration: underline;
-}
-
 .NavBar a.active {
   font-weight: bold;
   text-decoration: underline;

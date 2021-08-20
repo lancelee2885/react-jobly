@@ -73,6 +73,20 @@ class JoblyApi {
     return res;
   }
 
+  /** Unapply to a job. */
+
+  static async unApplyToJob(username, id) {
+    let res = await this.request(`users/${username}/jobs/${id}`, {}, "delete");
+    return res;
+  }
+  
+  /** Gets user's list of applied jobs. */
+
+  static async getAppliedJobs(username) {
+    let res = await this.request(`users/${username}/jobs`);
+    return res.jobs;
+  }
+
   /*************** Company Routes ***************/
   
   /** Get details on all companies of filtered companies if there is a search term. */
