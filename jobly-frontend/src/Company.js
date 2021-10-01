@@ -6,11 +6,16 @@ import UserContext from "./UserContext";
 
 /** Company: renders a page with company information and JobList of the company
  *
+ *  Props:
+ *    - handleApply: function rec.d from parent(CompaniesPage) for changing states.
+ *    - handleUnApply: function rec.d from parent(CompaniesPage) for changing states.
+ *  
  *  States:
  *    - company: an object with company info -> {handle, name, description, numEmployees, logoUrl}
- *    - handleApply: function rec.d from parent passing down to child component
  *
  *  (App -> Company -> JobList)
+ *  @category React Components
+ *  @component
  */
 
 function Company({ handleApply , handleUnApply }) {
@@ -49,5 +54,6 @@ function Company({ handleApply , handleUnApply }) {
     </div>
   );
 }
+
 
 export default Company;

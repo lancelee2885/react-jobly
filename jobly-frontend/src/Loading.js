@@ -1,3 +1,8 @@
+/** Loading: Loading Message.
+ * 
+ * @category React Components
+ * @component
+ */
 function Loading() {
   return (
     <div className="Loading">

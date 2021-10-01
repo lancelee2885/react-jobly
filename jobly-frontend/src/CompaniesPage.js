@@ -13,6 +13,8 @@ import { useHistory } from "react-router-dom";
  *  - query: string of search term
  *
  * (App -> CompaniesPage -> CompanyList, SearchForm)
+ * @category React Components
+ * @component
  */
 function CompaniesPage() {
   console.log("CompaniesPage Renders");
@@ -37,6 +39,10 @@ function CompaniesPage() {
     [query]
   );
 
+  /** This function changes 'query' state and would be passing down to children components
+   * 
+   * @param {String} term 
+   */
   function handleSearch(term) {
     setQuery(term);
   }

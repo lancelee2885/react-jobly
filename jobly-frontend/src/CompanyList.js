@@ -7,6 +7,8 @@ import CompanyCard from "./CompanyCard";
  *  - companies: an array of companies -> [{handle, name, description, numEmployees, logoUrl}, ...]
  * 
  * (CompaniesPage -> CompanyList -> CompanyCard)
+ * @category React Components
+ * @component
  */
 function CompanyList({ companies }) {
   console.log("CompanyList Renders");

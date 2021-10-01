@@ -1,8 +1,21 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+/** NavBar: Navigation bar on top of every page
+ * 
+ * Props:
+ *  - currUser: information of current logged in user.
+ *  - handleLogOut: function rec'd from parent to clear current user.
+ * 
+ * @category React Components
+ * @component
+ */
 function NavBar({ currUser, handleLogOut }) {
 
+  /** This function returns JSX with correct Navlinks
+   * 
+   * @returns {JSX} Navbar items
+   */
   function displayCorrectLinks() {
     if (currUser) {
       return (

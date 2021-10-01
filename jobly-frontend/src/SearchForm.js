@@ -6,7 +6,13 @@ import {debounce} from 'lodash';
  * Props:
  *  - handleSearch: function rec'd from parent components
  * 
+ * States:
+ *  - term: string of search term
+ * 
  * (CompaniesPage, JobsPage -> SearchForm)
+ * 
+ * @category React Components
+ * @component
  */
 function SearchForm({ handleSearch }) {
   console.log("SearchForm Renders");
@@ -14,13 +20,18 @@ function SearchForm({ handleSearch }) {
   
   const [term, setTerm] = useState("");
 
-  
+  /**
+   *  Changes state upon inputting information on the form.
+   */
   function handleChange(evt) {
     setTerm(evt.target.value);
     const search = debounce(handleSearch, 300);
     search(evt.target.value)
   }
 
+  /**
+   *  start searching once form is submited
+   */
   function handleSubmit(evt) {
     evt.preventDefault();
     handleSearch(term);

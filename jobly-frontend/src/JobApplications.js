@@ -5,10 +5,17 @@ import JoblyApi from "./api";
 import UserContext from "./UserContext";
 import { useHistory } from "react-router-dom";
 
-/** TODO: docstring
+/** JobApplications: Renders a list of jobs applied by current user.
  * 
+ * Props: 
+ *   - handleApply: function rec.d from parent(CompaniesPage) for changing states.
+ *   - handleUnApply: function rec.d from parent(CompaniesPage) for changing states.
  * 
+ * State:
+ *   - jobs: List of jobs, updates current user changes.
  * 
+ * @category React Components
+ * @component
  */
 
 function JobApplications({ handleApply, handleUnApply }) {

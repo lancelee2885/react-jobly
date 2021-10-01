@@ -8,6 +8,14 @@ import UserContext from "./UserContext";
  * 
  * Props:
  *  - handleUpdate: function rec'd from parent that updates states when the form is submited
+ * 
+ * States:
+ *  - formData: changes upon changes of input
+ *  - err: error messages
+ *  - isUpdated: whether the form has been submited
+ * 
+ * @category React Components
+ * @component
  */
 function ProfileForm({ handleUpdate }) {
   console.log("ProfileForm Renders");
@@ -30,6 +38,9 @@ function ProfileForm({ handleUpdate }) {
   const [err, setErr] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
 
+  /**
+   *  Changes state upon inputting information on the form.
+   */
   function handleChange(evt) {
     const input = evt.target;
     setFormData(formData => ({
@@ -38,6 +49,9 @@ function ProfileForm({ handleUpdate }) {
     }));
   }
 
+  /**
+   *  updates once form is submited.
+   */
   async function handleSubmit(evt) { 
     evt.preventDefault(); 
     try {

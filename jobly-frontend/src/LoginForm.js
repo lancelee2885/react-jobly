@@ -8,6 +8,12 @@ import UserContext from "./UserContext";
  * 
  * Props:
  *  - handleLogIn: function rec'd from parent that updates states when the form is submited
+ * 
+ * States:
+ *  - formData: updates upon changes input of the form.
+ * 
+ * @category React Components
+ * @component
  */
 function LoginForm({ handleLogIn }) {
   console.log("LoginForm Renders");
@@ -22,6 +28,9 @@ function LoginForm({ handleLogIn }) {
     history.push("/companies");
   }
 
+  /**
+   *  Changes state upon inputting information on the form.
+   */
   function handleChange(evt) {
     const input = evt.target;
     setFormData(formData => ({
@@ -30,6 +39,9 @@ function LoginForm({ handleLogIn }) {
     }));
   }
 
+  /**
+   *  Login once form is submited.
+   */
   async function handleSubmit(evt) {
     evt.preventDefault();
     try {

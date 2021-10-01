@@ -8,6 +8,9 @@ import Job from "./Job";
  *    - handleApply: function rec.d from parent passing down to child component
  * 
  *  (JobsPage -> JobList -> Job)
+ * 
+ * @category React Components
+ * @component
  */
 function JobList({ jobs, handleApply, handleUnApply }) {
   console.log("JobList Renders");

@@ -1,5 +1,10 @@
 import React from 'react';
 
+/** Error: Component for displaying error messages.
+ * 
+ * @category React Components
+ * @component 
+ */
 function Error ({errors}) {
   return (
   

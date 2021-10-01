@@ -12,6 +12,9 @@ import UserContext from "./UserContext"
  *  - isApplied: check if current job is applied by current user
  * 
  * (JobList -> Job)
+ * 
+ * @category React Components
+ * @component
  */
 function Job({ job, handleApply, handleUnApply }) {
   console.log("Job Renders");

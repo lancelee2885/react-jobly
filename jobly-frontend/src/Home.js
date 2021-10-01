@@ -2,6 +2,11 @@ import React, { useContext } from 'react';
 import UserContext from "./UserContext";
 import { Link } from "react-router-dom";
 
+/** Home: Homepage for unauthenticated user.
+ * 
+ * @category React Components
+ * @component
+ */
 function Home() {
   console.log("Home Renders");
 

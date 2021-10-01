@@ -8,6 +8,13 @@ import UserContext from "./UserContext";
  * 
  * Props:
  *  - handleSIgnUp: function rec'd from parent that updates states when the form is submited
+ * 
+ * States:
+ *  - formData: changes upon changes of input
+ *  - err: error messages
+ * 
+ * @category React Components
+ * @component
  */
 function SignupForm({ handleSignUp }) {
   console.log("SignupForm Renders");
@@ -22,6 +29,9 @@ function SignupForm({ handleSignUp }) {
     history.push("/companies");
   }
 
+  /**
+   *  Changes state upon inputting information on the form.
+   */
   function handleChange(evt) {
     const input = evt.target;
     setFormData(formData => ({
@@ -30,6 +40,9 @@ function SignupForm({ handleSignUp }) {
     }));
   }
 
+  /**
+   *  calls handleSignUp upon submiting
+   */
   async function handleSubmit(evt) { 
     evt.preventDefault(); 
     try {

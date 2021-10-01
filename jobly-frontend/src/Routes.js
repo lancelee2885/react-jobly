@@ -10,6 +10,11 @@ import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import ProfileForm from './ProfileForm';
 
+/** Routes: Providing routes for different paths of the page
+ * 
+ * @category React Components
+ * @component
+ */
 function Routes({ handleLogIn, handleSignUp, handleUpdate, handleApply, handleUnApply }) {
 
   return (

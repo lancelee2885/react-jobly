@@ -7,14 +7,20 @@ import UserContext from "./UserContext";
 import { useHistory } from "react-router-dom";
 
 
-/** JobsPage:
+/** JobsPage: Contains JobList and Job components
  *
+ * Props:
+ *  - handleApply: function rec.d from parent(CompaniesPage) for changing states.
+ *  - handleUnApply: function rec.d from parent(CompaniesPage) for changing states.
+ * 
  * States:
  *  - jobs: an array of jobs [{id, title, salary, equity}, ...]
  *  - query: a string of search term
- *  - handleApply: function rec.d from parent passing down to child component
  * 
  * (App -> JobsPage -> JobList, SearchForm)
+ * 
+ * @category React Components
+ * @component
  */
 function JobsPage({ handleApply, handleUnApply }) {
   console.log("JobsPage Renders");

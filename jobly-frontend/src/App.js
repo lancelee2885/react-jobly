@@ -15,6 +15,9 @@ import UserContext from "./UserContext";
  *    - token: encrypted string
  *    - currUser: an object of user's information {username, firstName, lastName, email, isAdmin, applications: {jobId...}}
  *    - infoLoaded: checks if user info has been loaded onto currUser
+ * 
+ * @category React Components
+ * @component
  */
 
 function App() {
@@ -49,6 +52,8 @@ function App() {
 
   /**
    * Calls JoblyApi logIn to provide a token and update state
+   * 
+   * @param {Object} credentials Object containing username and password
    */
   async function handleLogIn(credentials) {
     console.log("handleLogIn");
@@ -59,6 +64,8 @@ function App() {
 
   /**
    * Calls JoblyApi signUp to provide a token and update state
+   * 
+   * @param {Object} userInfo Object containing user information for signup.
    */
   async function handleSignUp(userInfo) {
     console.log("handleSignUp");
@@ -69,6 +76,8 @@ function App() {
 
   /**
    * Calls JoblyApi updateUser to update user information
+   * 
+   * @param {Object} userInfo Object containing user information for update.
    */
   async function handleUpdate(userInfo) {
     console.log("handleUpdate");
@@ -89,6 +98,8 @@ function App() {
 
   /**
    * Calls JoblyApi applyToJob to update user's applications
+   * 
+   * @param {Number} id id for job being applied.
    */
      async function handleApply(id) {
       console.log("handleApply");
@@ -105,6 +116,8 @@ function App() {
 
   /**
    * Calls JoblyApi unApplyToJob to update user's applications
+   * 
+   * @param {Number} id id for job being unapplied.
    */
      async function handleUnApply(id) {
       console.log("handleUnApply");

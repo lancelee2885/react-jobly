@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
  *  - company: an object of company information -> {handle, name, description, numEmployees, logoUrl}
  * 
  * (CompanyList -> ComapanyCard)
+ * @category React Components
+ * @component 
  */
 
 function CompanyCard({ company }) {
