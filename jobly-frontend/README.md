@@ -39,7 +39,7 @@ You can view the deployed version of Jobly [here](http://jobly-lance.surge.sh/).
 
 ## Authors 
 
-Jobly is authored by [Lance Lee](https://github.com/lancelee2885) and [Grant Li](https://github.com/grantli).
+Jobly is authored by [Lance Lee](https://github.com/lancelee2885) and [Grant Li](https://github.com/grantyli94).
 
 <br>
 
