@@ -15,7 +15,7 @@ You can view the deployed version of Jobly [here](http://jobly-lance.surge.sh/).
 
 ## React Component Hierarchy
 
-![Jobly Component Hierarchy](./react0diagram.png)
+![Jobly Component Hierarchy](./react-diagram.png)
 
 <br>
 
