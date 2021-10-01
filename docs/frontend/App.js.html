@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> App.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Jobly React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>API</h2><h3>Classes</h3><ul><li><a href="JoblyApi.html">JoblyApi</a></li></ul></div><div class="category"><h2>React Components</h2><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="CompaniesPage.html">CompaniesPage</a></li><li><a href="Company.html">Company</a></li><li><a href="CompanyCard.html">CompanyCard</a></li><li><a href="CompanyList.html">CompanyList</a></li><li><a href="Error.html">Error</a></li><li><a href="Home.html">Home</a></li><li><a href="Job.html">Job</a></li><li><a href="JobApplications.html">JobApplications</a></li><li><a href="JobList.html">JobList</a></li><li><a href="JobsPage.html">JobsPage</a></li><li><a href="Loading.html">Loading</a></li><li><a href="LoginForm.html">LoginForm</a></li><li><a href="NavBar.html">NavBar</a></li><li><a href="ProfileForm.html">ProfileForm</a></li><li><a href="Routes.html">Routes</a></li><li><a href="SearchForm.html">SearchForm</a></li><li><a href="SignupForm.html">SignupForm</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>App.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import "./App.css";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter } from "react-router-dom";
+import jwt from "jsonwebtoken";
+
+import Routes from "./Routes";
+import Loading from "./Loading";
+import NavBar from "./NavBar";
+import JoblyApi from "./api";
+import UserContext from "./UserContext";
+
+/** App:
+ *
+ *  States:
+ *    - token: encrypted string
+ *    - currUser: an object of user's information {username, firstName, lastName, email, isAdmin, applications: {jobId...}}
+ *    - infoLoaded: checks if user info has been loaded onto currUser
+ * 
+ * @category React Components
+ * @component
+ */
+
+function App() {
+  console.log("App renders");
+
+  const [token, setToken] = useState("");
+  const [currUser, setCurrUser] = useState(null);
+  const [infoLoaded, setInfoLoaded] = useState(false);
+
+  /**
+   * Updates currUser whenever token changes or when token found in
+   * localStorage
+   */
+  useEffect(
+    function updateCurrUserOnTokenChange() {
+      async function updateCurrUser() {
+        if (token) {
+          const { username } = jwt.decode(token);
+          const user = await JoblyApi.getUserInfo(username);
+          user.applications = new Set(user.applications);
+          setCurrUser(user);
+          setInfoLoaded(true);
+        } else {
+          checkForRememberedUser();
+        }
+      }
+      updateCurrUser();
+
+    },
+    [token]
+  );
+
+  /**
+   * Calls JoblyApi logIn to provide a token and update state
+   * 
+   * @param {Object} credentials Object containing username and password
+   */
+  async function handleLogIn(credentials) {
+    console.log("handleLogIn");
+    const token = await JoblyApi.logIn(credentials);
+    setToken(token);
+    localStorage.setItem("token", token);
+  }
+
+  /**
+   * Calls JoblyApi signUp to provide a token and update state
+   * 
+   * @param {Object} userInfo Object containing user information for signup.
+   */
+  async function handleSignUp(userInfo) {
+    console.log("handleSignUp");
+    const token = await JoblyApi.signUp(userInfo);
+    setToken(token);
+    localStorage.setItem("token", token);
+  }
+
+  /**
+   * Calls JoblyApi updateUser to update user information
+   * 
+   * @param {Object} userInfo Object containing user information for update.
+   */
+  async function handleUpdate(userInfo) {
+    console.log("handleUpdate");
+    const user = await JoblyApi.updateUser(userInfo, currUser.username);
+    user.applications = new Set(user.applications);
+    setCurrUser(user);
+  }
+
+  /**
+   * Reset states
+   */
+  function handleLogOut() {
+    console.log("handleLogOut");
+    setToken("");
+    setCurrUser(null);
+    localStorage.clear();
+  }
+
+  /**
+   * Calls JoblyApi applyToJob to update user's applications
+   * 
+   * @param {Number} id id for job being applied.
+   */
+     async function handleApply(id) {
+      console.log("handleApply");
+      try {
+        await JoblyApi.applyToJob(currUser.username, id);
+        setCurrUser(u => ({
+          ...u,
+          applications: u.applications.add(id) // make this a set
+        }));
+      } catch(err) {
+        console.log("HANDLEAPPLY ERROR IN APP", err);
+      }
+    }
+
+  /**
+   * Calls JoblyApi unApplyToJob to update user's applications
+   * 
+   * @param {Number} id id for job being unapplied.
+   */
+     async function handleUnApply(id) {
+      console.log("handleUnApply");
+      await JoblyApi.unApplyToJob(currUser.username, id);
+      const user = await JoblyApi.getUserInfo(currUser.username);
+      user.applications = new Set(user.applications);
+      setCurrUser(user);
+    }
+
+  /** If there are user credentials in local storage, use those to log in
+   * that user. This is meant to be called on page load, just once.
+   */
+  function checkForRememberedUser() {
+    console.log("checkForRememberedUser");
+    const t = localStorage.getItem("token");
+    if (t) {
+      setToken(t);
+      JoblyApi.token = t;
+    } else {
+      setInfoLoaded(true);
+    }
+  }
+
+  return (
+    &lt;UserContext.Provider value={currUser}>
+      &lt;div className="App">
+        &lt;BrowserRouter>
+          &lt;NavBar currUser={currUser} handleLogOut={handleLogOut} />
+          {!infoLoaded
+          ? &lt;Loading />
+          : &lt;Routes
+              handleLogIn={handleLogIn}
+              handleSignUp={handleSignUp}
+              handleUpdate={handleUpdate}
+              handleApply={handleApply}
+              handleUnApply={handleUnApply}
+            />
+          }
+        &lt;/BrowserRouter>
+      &lt;/div>
+    &lt;/UserContext.Provider>
+  );
+}
+
+export default App;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>
