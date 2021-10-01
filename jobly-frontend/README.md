@@ -13,6 +13,12 @@ You can view the deployed version of Jobly [here](http://jobly-lance.surge.sh/).
 
 <br>
 
+## Documentation
+
+A detailed documentation can be found [here](https://lancelee2885.github.io/react-jobly/frontend/)
+
+<br>
+
 ## React Component Hierarchy
 
 ![Jobly Component Hierarchy](./react-diagram.png)
